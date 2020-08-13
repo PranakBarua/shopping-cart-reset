@@ -108,7 +108,10 @@
 
    //changingMobileAndCaseNumberAndAmount
    function changingMobileAndCaseNumberAndAmount(id1,id2,price){
-      const currentMobile=document.getElementById(id1).value;
+      let currentMobile=document.getElementById(id1).value;
+      if(currentMobile==""){
+         currentMobile=0;
+      }
       const currentMobileAmount=parseFloat(currentMobile);
       let newMobile;
       if(price>0){
