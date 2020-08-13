@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Shopping Cart</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+   <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+   <section>
+      <div class="container">
+         <div class="cart">
+            <div class="col-md-12 col-lg-10 mx-auto">
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item">
+                        <img src="images/product-1.png" alt="">
+                        <h5>iPhone 11 128GB Black</h5>
+                     </div>
+
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="removeMobileButton" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="currentMobile" type="text" class="form-control text-center" value="0">
+                           <button id="addMobileButton" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <h5>$<span id="currentMobilePrice">0</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item mx-auto">
+                        <img src="images/product-2.png" alt="">
+                        <h5>iPhone 11 Silicone Case - Black</h5>
+                     </div>
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="removeCaseButton" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="currentCase" type="text" class="form-control text-center" value="0">
+                           <button id="addCaseButton" class="btn btn-default"><i class="fas fa-plus"></i></button>
+
+                        </div>
+                        <h5>$<span id="currentCasePrice">0</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+
+                     <div class="col-md-8">
+                        <h5>Subtotal: </h5>
+                        <h5>Tax:</h5>
+                        <h5>Total:</h5>
+                     </div>
+
+                     <div class="col-md-4 status">
+                        <h5>$<span id="currentSubtotal">0</span></h5>
+                        <h5>$<span id="currentTax">10</span></h5>
+                        <h5>$<span id="currentTotal">0</span></h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-12 pt-4 pb-4">
+                  <button type="button" class="btn btn-success check-out">Check Out</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+</body>
+
+
+<SCript>
+   //addMobileButton
+   const addMobileButton=document.getElementById("addMobileButton");
+   addMobileButton.addEventListener("click",function(){
+      changingMobileAndCaseNumberAndAmount("currentMobile","currentMobilePrice",1219)
+      UpdateSubtotalAndTotalPrice("currentMobilePrice","currentCasePrice","currentTax")
+   })
+   //removeMobileButton
+   const removeMobileButton=document.getElementById("removeMobileButton");
+   removeMobileButton.addEventListener("click",function(){
+      changingMobileAndCaseNumberAndAmount("currentMobile","currentMobilePrice",-1*1219)
+      UpdateSubtotalAndTotalPrice("currentMobilePrice","currentCasePrice","currentTax")
+   })
+   //addCaseButton
+   const addCaseButton=document.getElementById("addCaseButton");
+   addCaseButton.addEventListener("click",function(){
+      changingMobileAndCaseNumberAndAmount("currentCase","currentCasePrice",59)
+      UpdateSubtotalAndTotalPrice("currentMobilePrice","currentCasePrice","currentTax")
+   })
+   //removeCaseButton
+   const removeCaseButton=document.getElementById("removeCaseButton");
+   removeCaseButton.addEventListener("click",function(){
+      changingMobileAndCaseNumberAndAmount("currentCase","currentCasePrice",-1*59)
+      UpdateSubtotalAndTotalPrice("currentMobilePrice","currentCasePrice","currentTax")
+   })
+
+   //changingMobileAndCaseNumberAndAmount
+   function changingMobileAndCaseNumberAndAmount(id1,id2,price){
+      const currentMobile=document.getElementById(id1).value;
+      const currentMobileAmount=parseFloat(currentMobile);
+      let newMobile;
+      if(price>0){
+         newMobile=currentMobileAmount+1;
+      }
+      else{
+         newMobile=currentMobileAmount-1;
+      }
+      if(newMobile<0){
+         alert("item number can't be negative");
+      }
+      else{
+         const currentMobilePrice=document.getElementById(id2).innerText;
+         const currentMobilePriceAmount=parseFloat(currentMobilePrice);
+         const newMobilePrice=currentMobilePriceAmount+price;
+         document.getElementById(id1).value=newMobile;
+         document.getElementById(id2).innerText=newMobilePrice;
+      }
+     
+   }
+
+   //UpdateSubtotalAndTotalPrice
+   function UpdateSubtotalAndTotalPrice(id1,id2,id3){
+      const currentMobile=document.getElementById("currentMobilePrice").innerText;
+      const currentMobilePrice=parseFloat(currentMobile);
+      const currentCase=document.getElementById("currentCasePrice").innerText;
+      const currentCasePrice=parseFloat(currentCase);
+      const tax=document.getElementById("currentTax").innerText;
+      const taxAmount=parseFloat(tax);
+      const result=currentMobilePrice+currentCasePrice;
+      const totalResult=result+((result/100)*taxAmount);
+      document.getElementById("currentSubtotal").innerText=result;
+      document.getElementById("currentTotal").innerText=totalResult;
+   }
+</SCript>
+
+</html>
